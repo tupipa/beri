@@ -120,8 +120,9 @@ BSV_FILES=			\
 	TLB.bsv			\
 	Writeback.bsv			\
 	DebugUnit.bsv		\
-	Multicore.bsv		\
-	$(PERIPHERALS_DIR)/DMA/*.bsv
+	Multicore.bsv		
+#\
+#	$(PERIPHERALS_DIR)/DMA/*.bsv
 
 C_HEADERS=$(INCLUDE_DIR)/parameters.h
 
