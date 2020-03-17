@@ -750,7 +750,7 @@ module mkCacheCore#(Bit#(16) cacheId,
       end*/
       Writeback: begin
         if (memRsps.notEmpty) begin
-          if (memResp.operation matches tagged Write .wop) begin
+          if (memResp.operation matches tagged Write ) begin
             memRsps.deq;
             debug2("CacheCore", $display("<time %0t, cache %0d, CacheCore> received write memory response ", $time, cacheId, fshow(memResp)));
             if (uncachedPending.notEmpty && !uncachedPending.first) begin 
@@ -798,7 +798,7 @@ module mkCacheCore#(Bit#(16) cacheId,
         ReqId memRspId = getRespId(memRsps.first);
         Bool last = getLastField(memResp);
         if (memRsps.notEmpty) begin
-          if (memResp.operation matches tagged Write .wop) begin
+          if (memResp.operation matches tagged Write ) begin
             memRsps.deq;
             debug2("CacheCore", $display("<time %0t, cache %0d, CacheCore> received write memory response ", $time, cacheId, fshow(memResp)));
             if (uncachedPending.notEmpty && !uncachedPending.first) begin 
@@ -1015,7 +1015,7 @@ module mkCacheCore#(Bit#(16) cacheId,
           end
           
           respValid = True;
-          if (cacheResp.operation matches tagged Write .wop &&& responseBehaviour==OnlyReadResponses) respValid = False;
+          if (cacheResp.operation matches tagged Write  &&& responseBehaviour==OnlyReadResponses) respValid = False;
           if (thisReqLast) begin
             if (!cts.fresh && !oneInFlight) begin
               deqRetryReqs = True;
@@ -1034,7 +1034,7 @@ module mkCacheCore#(Bit#(16) cacheId,
       end
       Serve: begin
         if (memRsps.notEmpty) begin
-          if (memResp.operation matches tagged Write .wop) begin
+          if (memResp.operation matches tagged Write ) begin
             memRsps.deq;
             debug2("CacheCore", $display("<time %0t, cache %0d, CacheCore> received write memory response ", $time, cacheId, fshow(memResp)));
             if (uncachedPending.notEmpty && !uncachedPending.first) begin 

@@ -71,7 +71,7 @@ module mkMasterStats#(Master#(CheriMemRequest, CheriMemResponse) m)(MasterStats)
           rspRead = True;
           rspReadLast = rr.last;
         end
-        tagged Write .wr: rspWrite = True;
+        tagged Write : rspWrite = True;
       endcase
     endcase
     masterEvnt <= MasterEvents {

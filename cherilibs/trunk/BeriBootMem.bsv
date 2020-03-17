@@ -170,7 +170,7 @@ module mkBootMem(Peripheral#(0));
     debug2("bootMem", $display("<time %0t, bootMem> read response ", $time, fshow(resp)));
   endrule
   
-  rule handle_write_response(pend_fifo.first.operation matches tagged Write .unused);
+  rule handle_write_response(pend_fifo.first.operation matches tagged Write );
     CheriMemResponse64 resp <- toGet(pend_fifo).get;
     resp_fifo.enq(resp);
     debug2("bootMem", $display("<time %0t, bootMem> write response ", $time, fshow(resp)));
