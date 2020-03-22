@@ -50,7 +50,7 @@
 #export QUARTUS_VERSION=13v1
 #export BLUESPEC_VERSION=2014.05.C
 #export BLUESPEC_VERSION=2020.01.20-open-source
-export BLUESPEC_VERSION=2019.05.beta2-debian9stretch-amd64
+export BLUESPEC_VERSION=2019.05.beta2-debian8jessie-amd64
 # Comment this out if you don't intend to use Altera Quartus
 #QUARTUS_ENABLE=1
 

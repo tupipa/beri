@@ -47,7 +47,8 @@ TAGS_ALIGN?=32
 MEMCONV=python "$(TOOLS_DIR_ABS)/memConv.py"
 AS=mips64-as
 CPP=cpp
-LD=mips64-ld
+#LD=mips64-ld
+LD=mips-linux-gnu-ld
 OBJDUMP=mips64-objdump
 OBJCOPY=mips64-objcopy
 
