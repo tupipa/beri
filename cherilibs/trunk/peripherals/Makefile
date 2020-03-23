@@ -63,13 +63,10 @@ objs=						\
 
 SUBDIRS=					\
 	AvalonSampler				\
-	MTL_LCD					\
-	MTL_LCD_HDMI				\
 	TERASIC_ISP1761				\
 	USB1761Bridge				\
 	JTAGUART2Stream				\
 	i2c					\
-	AlteraUPP_sd_card			\
 	FanControl				\
 	ReconfigPLL				\
 	opencore_16550_uart			\
@@ -79,6 +76,10 @@ SUBDIRS=					\
 	PCIExpressStream			\
 	AdjustableJTAGUART			\
 	$(NULL)
+
+#	MTL_LCD					\
+#	MTL_LCD_HDMI				\
+#	AlteraUPP_sd_card			\
 
 all: $(TARGETS) $(SUBDIRS)
 $(SUBDIRS):
