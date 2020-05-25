@@ -33,7 +33,8 @@ int test(void)
 {
   __capability char *datacp = (__capability char *)data;
 
-  assert((void*)datacp == data);
+  //assert((void*)datacp == data);
+  assert((__cheri_fromcap void*)(datacp) == data);
 
   return 0;
 }
