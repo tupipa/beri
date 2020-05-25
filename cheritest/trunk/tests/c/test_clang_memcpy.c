@@ -59,8 +59,8 @@ void check(struct Test *t1, int start, int end)
 	{
 		assert(t1->pad0[i] == i);
 	}
-	assert((void*)t1->y == t1);
-	assert(__builtin_cheri_get_cap_tag(t1->y));
+	assert((__cheri_fromcap void*)t1->y == t1);
+	assert(__builtin_mips_cheri_get_cap_tag(t1->y));
 	for (int i=0 ; i<end ; i++)
 	{
 		assert(t1->pad1[i] == i);
@@ -92,27 +92,27 @@ int test(void)
 	invalidate(&t2);
 	// Simple case: aligned start and end
 	__capability void *cpy = memcpy_c(t1.y, CAP(&t1), sizeof(t1));
-	assert((void*)cpy == &t2);
+	assert((__cheri_fromcap void*)cpy == &t2);
 	check(&t2, 0, 32);
 	invalidate(&t2);
 	// Test that it still works with an unaligned start...
 	cpy = memcpy_c(CAP(&t2.pad0[3]), CAP(&t1.pad0[3]), sizeof(t1) - 3);
-	assert((void*)cpy == &t2.pad0[3]);
+	assert((__cheri_fromcap void*)cpy == &t2.pad0[3]);
 	check(&t2, 3, 32);
 	// ...or an unaligned end...
 	cpy = memcpy_c(CAP(&t2), CAP(&t1), sizeof(t1) - 3);
-	assert((void*)cpy == &t2);
+	assert((__cheri_fromcap void*)cpy == &t2);
 	check(&t2, 0, 29);
 	// ...or both...
 	cpy = memcpy_c(CAP(&t2.pad0[3]), CAP(&t1.pad0[3]), sizeof(t1) - 6);
-	assert((void*)cpy == &t2.pad0[3]);
+	assert((__cheri_fromcap void*)cpy == &t2.pad0[3]);
 	check(&t2, 3, 29);
 	invalidate(&t2);
 	// ...and finally a case where the alignment is different for both?
 	cpy = memcpy_c(CAP(&t2), CAP(&t1.pad0[1]), sizeof(t1) - 1);
-	assert((void*)cpy == &t2);
+	assert((__cheri_fromcap void*)cpy == &t2);
 	// This should have invalidated the capability
-	assert(__builtin_cheri_get_cap_tag(t2.y) == 0);
+	assert(__builtin_mips_cheri_get_cap_tag(t2.y) == 0);
 	// Check that the non-capability data has been copied correctly
 	for (int i=0 ; i<31 ; i++)
 	{
@@ -147,7 +147,7 @@ int test(void)
 	copy = memcpy(&t2, &t1.pad0[1], sizeof(t1) - 1);
 	assert(copy == &t2);
 	// This should have invalidated the capability
-	assert(!__builtin_cheri_get_cap_tag(t2.y));
+	assert(!__builtin_mips_cheri_get_cap_tag(t2.y));
 	// Check that the non-capability data has been copied correctly
 	for (int i=0 ; i<31 ; i++)
 	{
@@ -162,11 +162,11 @@ int test(void)
 	// aligned base, unaligned offset + base
 	invalidate(&t2);
 	cpy = memcpy_c(
-		__builtin_cheri_cap_offset_increment(CAP(&t2), 3),
-		__builtin_cheri_cap_offset_increment(CAP(&t1), 3),
+		__builtin_mips_cheri_cap_offset_increment(CAP(&t2), 3),
+		__builtin_mips_cheri_cap_offset_increment(CAP(&t1), 3),
 		sizeof(t1)-6
 		);
-	assert((void*)cpy == &t2.pad0[3]);
+	assert((__cheri_fromcap void*)cpy == &t2.pad0[3]);
 	check(&t2, 3, 29);
 
 	// unaligned base, aligned offset + base
@@ -175,11 +175,11 @@ int test(void)
 	// CHERI256, CFromPtr / CSetBounds on CHERI128
 	invalidate(&t2);
 	cpy = memcpy_c(
-		__builtin_cheri_cap_offset_increment(CAP(t2.pad0-1), 1),
-		__builtin_cheri_cap_offset_increment(CAP(t1.pad0-1), 1),
+		__builtin_mips_cheri_cap_offset_increment(CAP(t2.pad0-1), 1),
+		__builtin_mips_cheri_cap_offset_increment(CAP(t1.pad0-1), 1),
 		sizeof(t1)
 		);
-	assert((void*)cpy == &t2.pad0);
+	assert((__cheri_fromcap void*)cpy == &t2.pad0);
 	check(&t2, 0, 32);
 	
 	return 0;
